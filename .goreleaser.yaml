@@ -15,6 +15,11 @@ builds:
     goarch:
       - amd64
       - arm64
+archives:
+  - name_template: "{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
 changelog:
