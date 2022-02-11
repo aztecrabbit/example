@@ -1,10 +1,6 @@
-# This is an example .goreleaser.yml file with some sensible defaults.
-# Make sure to check the documentation at https://goreleaser.com
 before:
   hooks:
-    # You may remove this if you don't use go modules.
     - go mod tidy
-    # you may remove this if you don't need go generate
     - go generate ./...
 builds:
   - env:
@@ -16,11 +12,14 @@ builds:
       - amd64
       - arm64
 archives:
-  - format_overrides:
-    - goos: windows
-      format: zip
+  - name_template: "{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+checksum:
+  name_template: "{{ .ProjectName }}_v{{ .Version }}_checksums.txt"
 snapshot:
-  name_template: "v{{ incpatch .Version }}-next"
+  name_template: "{{ incpatch .Version }}-next"
 changelog:
   sort: asc
   filters:
